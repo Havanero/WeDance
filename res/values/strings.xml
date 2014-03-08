@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <string name="app_name">CubanoFM</string>
+	<string name="testsong_20_sec">http://scfire-ntc-aa01.stream.aol.com/stream/1011:80/stream/1011</string>
+	<string-array name="stationAddress">
+	    <item></item>
+        <item>http://us-nj01-icecast.musiconeradio.com:80/musicone/mp3/128k</item>
+        <item>http://icy-e-03.sharp-stream.com:80/kiss100.mp3</item>
+        <item>http://icy-e-03.sharp-stream.com:80/magic1054.mp3</item>
+        <item>http://media-ice.musicradio.com:80/CapitalMP3</item>
+        <item>http://vprbbc.streamguys.net:80/vprbbc24.mp3</item>
+        <item>http://205.164.62.13:7700</item>
+        <item>http://205.164.62.21:7700</item>
+        <item>http://pub5.di.fm:80/di_progressive_aac</item>
+        <item>http://84.46.204.45:8000/ehr</item>
+    </string-array>
+    <string-array name="stationAddress_name">
+        <item>Switch Station</item>
+        <item>Music One</item>
+        <item>KISS FM</item>
+        <item>Magic FM</item>
+        <item>Capital FM</item>
+        <item>BBC FOUR</item>
+        <item>Vocal Trance 1</item>
+        <item>Vocal Trance 2</item>
+        <item>Progressive</item>
+        <item>European Radio</item>
+    </string-array>
+</resources>
