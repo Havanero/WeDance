@@ -841,15 +841,8 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         // Executed after the complete execution of doInBackground() method
         @Override
         protected void onPostExecute(String result){
-          
-        	
-        	System.out.println("Exectuing PostExecute getArtist Void =" + result);
-			//System.out.println("Exectuing PostExecute getTitle =" + result.getTitle());
-			//System.out.println("Results PostExecute=" + result.getArtist()); 
-			//titlePlaing=result.getTitle();
-			//artistPlaying=result.getArtist();
+            Log.i(TAG,"Executing post Get Artists " + result);
         }
- 
     }
  
 @Override
@@ -885,11 +878,6 @@ public static boolean isMediaPlaying(){
 		}
 		catch(Exception e){}
 	}
-		
-	
-	
 	return false;
-	
-	
 }
 }

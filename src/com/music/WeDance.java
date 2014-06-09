@@ -100,14 +100,11 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
             // Restore value of members from saved state
             selectPosition = savedInstanceState.getInt(STATE_SELECTED);
             Log.e(getClass().getName(),"Restoring previous position==" + selectPosition);
-           
         } 
-       
 
         setContentView(R.layout.main);
         dialog = new ProgressDialog(this);
         initView();
-        
     }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -129,13 +126,9 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
         IntentFilter intentStopped = new IntentFilter(ServiceMusic.STOPPED);
         registerReceiver(receivedFromService,intentStopped);
         Log.d(getClass().getName(),"Spinnner Selection is now " + selectPosition);
-        
-       
-        
         Log.e(getClass().getName(),"Linking Player onResume " );
-        	
-	        
-        ServiceMusic.getInstance();
+	    ServiceMusic.getInstance();
+
 		if (!ServiceMusic.isMediaPlaying()){
         	Log.e("Dance","onResume Player not longer playing");
         	
@@ -154,11 +147,9 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
         	try{
         		//added new by caleb
         		mediaPlayer=ServiceMusic.getInstance().mPlayer;
-        		
+
         		if (mediaPlayer!=null){
-        			
         			Log.d("Dance","OK to Release - NOT a null player");
-        			
         			
         		}else{
         			Log.e("Dance","Not Releasing");
