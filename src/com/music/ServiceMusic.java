@@ -56,7 +56,7 @@ import android.widget.ViewAnimator;
  * Service that handles media playback. This is the Service through which we perform all the media
  * handling in our application. Upon initialization, it starts a {@link MusicRetriever} to scan
  * the user's media. Then, it waits for Intents (which come from our main activity,
- * {@link MainActivity}, which signal the service to perform specific operations: Play, Pause,
+ * {@link com.music.WeDance}, which signal the service to perform specific operations: Play, Pause,
  * Rewind, Skip, etc.
  */
 public class ServiceMusic extends Service implements OnCompletionListener, OnPreparedListener,
@@ -244,7 +244,8 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         else
             mAudioFocus = AudioFocus.Focused; // no focus feature, so we always "have" audio focus
 
-       // mDummyAlbumArt = BitmapFactory.decodeResource(getResources(), R.drawable.dummy_album_art);
+
+        mDummyAlbumArt = BitmapFactory.decodeResource(getResources(), R.drawable.au1);
 
         mMediaButtonReceiverComponent = new ComponentName(this, ReceiveIntent.class);
        
