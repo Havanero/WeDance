@@ -6,8 +6,8 @@
 	<string-array name="stationAddress">
 	    <item></item>
         <item>http://us-nj01-icecast.musiconeradio.com:80/musicone/mp3/128k</item>
-        <item>http://icy-e-03.sharp-stream.com:80/kiss100.mp3</item>
-        <item>http://icy-e-03.sharp-stream.com:80/magic1054.mp3</item>
+        <item>http://icy-e-05.sharp-stream.com:80/kiss100.mp3</item>
+        <item>http://icy-e-05.sharp-stream.com:80/magic1054.mp3</item>
         <item>http://media-ice.musicradio.com:80/CapitalMP3</item>
         <item>http://vprbbc.streamguys.net:80/vprbbc24.mp3</item>
         <item>http://205.164.62.13:7700</item>

@@ -1,8 +1,5 @@
 package com.music;
 
-
-
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -57,8 +54,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 	
     ProgressDialog dialog;
     private String type ="null";
-    
-	String titlePlaing,artistPlaying=null;
+
 	private ImageButton songListView;
 	public EditText editTextSongURL;
 	Spinner mSprPlaceType;
