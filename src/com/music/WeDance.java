@@ -20,6 +20,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,7 +71,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 	//FrameLayout bgColor;
 	static final String PLAYER_STATE="playerState";
 	static final String STATE_SELECTED = "linkPosition";
-
+    final static String TAG = "ServiceMusic";
 	TextView myText;
 	    
 	private MediaPlayer mediaPlayer;  
@@ -127,10 +128,16 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 
 		if (!ServiceMusic.isMediaPlaying()){
         	Log.e("Dance","onResume Player not longer playing");
-        	
-        	startService(new Intent(ServiceMusic.ACTION_STOP));
-        	startService(new Intent(ServiceMusic.ACTION_PLAY));
-        	//startService(new Intent(ServiceMusic.ACTION_STOP));
+
+            //Intent intent = new Intent();
+            //intent.setClassName("com.music.action.STOP","STOP");
+
+            CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
+            CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplication(),new Intent(ServiceMusic.ACTION_PLAY));
+
+       	//startService(new Intent(ServiceMusic.ACTION_STOP));
+       	//startService(new Intent(ServiceMusic.ACTION_PLAY));
+       	//startService(new Intent(ServiceMusic.ACTION_STOP));
          if (isFinishing() && mediaPlayer != null) {
         		 
         		 mediaPlayer.release();
@@ -196,9 +203,12 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
         	 Log.d("Dance","onPause Player NOT isMediaPlaying");
         	
         	 mediaPlayer=ServiceMusic.getInstance().mPlayer;
-        	if (mediaPlayer!=null){
-        		
-              	startService(new Intent(ServiceMusic.ACTION_STOP));
+        	if (mediaPlayer!=null)
+            {
+              	CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
+                //Intent i=new Intent(ServiceMusic.ACTION_STOP);
+                //startService(i);
+                //startService(new Intent(ServiceMusic.ACTION_STOP));
         		//mediaPlayer.reset();
         		//mediaPlayer.release();
         		//mediaPlayer = null;
@@ -229,78 +239,56 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     	super.onBackPressed();
     	 if (ServiceMusic.isMediaPlaying()){
           	Log.d("Dance","Back Button Pressed Disconnecting Player");
-        
-          	startService(new Intent(ServiceMusic.ACTION_STOP));
-    	 }
+            //CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
+          	//startService(new Intent(ServiceMusic.ACTION_STOP));
+             Intent i=new Intent(ServiceMusic.ACTION_STOP);
+             startService(i);
+
+         }
     	
     }
     /** This method initialise all the views in project*/
     private void initView() {
-    	
             
     	bgColor = (RelativeLayout)findViewById(R.id.bgID);
 		buttonPlayPause = (ImageButton)findViewById(R.id.ButtonTestPlayPause);
-		
 		songListView=(ImageButton) findViewById(R.id.btnPlaylist);
-		
 		mPlaceType = getResources().getStringArray(R.array.stationAddress);
-		  
 	        // Array of place type names
 	    mPlaceTypeName = getResources().getStringArray(R.array.stationAddress_name);
-	 
 		buttonPlayPause.setOnClickListener(this);
-		
 		seekBarProgress = (SeekBar)findViewById(R.id.SeekBarTestPlay);	
 		seekBarProgress.setMax(99); // It means 100% .0-99
 		seekBarProgress.setOnTouchListener(this);
 		//editTextSongURL = (EditText)findViewById(R.id.EditTextSongURL);
 		//editTextSongURL.setText(R.string.testsong_20_sec);
-		
 		myText=(TextView)findViewById(R.id.displayText);
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, mPlaceTypeName);
-		
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, mPlaceTypeName);
         // Getting reference to the Spinner
         mSprPlaceType = (Spinner) findViewById(R.id.spr_place_type);
- 
         // Setting adapter on Spinner to set place types
         mSprPlaceType.setAdapter(adapter);
-        
- 
-        mediaPlayer=ServiceMusic.mPlayer; 
-	
+        mediaPlayer=ServiceMusic.mPlayer;
 	//	mediaPlayer.setOnBufferingUpdateListener(this);
 	//	mediaPlayer.setOnCompletionListener(this);
-		
 		mVisualizerView = (VisualizerView) findViewById(R.id.visualizerView);
-	    
-
 		//mSprPlaceType.setOnItemSelectedListener(this);
-
-		
 		mSprPlaceType.setOnItemSelectedListener(new OnItemSelectedListener() {
-		       
 			@Override
 	    	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 	    			long id) {
 	    		// TODO Auto-generated method stub
-	        	
 	        	//mediaPlayer.release();
-	        	
 	        	Object val=parent.getItemAtPosition(pos);
 	            type = mPlaceType[pos];
-	        	
 	        	if (pos==0){
-	        		
 	        		  return;
 	        		
 	        	}if(selectPosition==pos){
 	        		return;
 	        	}
-	        	
 	        	else{
-	        		
-	        	
+
 	        	URL useURL = null;
 				try {
 					useURL = new URL(type);
@@ -310,38 +298,36 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 				}
 	        	globalURL=useURL;
 	        	Log.d(getClass().getName(),"Selected=="+val.toString() + "......URL==" + type);
-	        	
 	      //  if(!mediaPlayer.isPlaying()){
 			//		mediaPlayer.start();
-	      // 	}	
+			// 	}
 	        	//mVisualizerView.release();
-	        	
-	        	startService(new Intent(ServiceMusic.ACTION_PAUSE));
-	        	Intent i = new Intent(ServiceMusic.ACTION_URL);
-	        	i.putExtra("StationName", val.toString());
-	            Uri uri = Uri.parse(type);
-	            i.setData(uri);
+	        	CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_PAUSE));
+	        	//startService(new Intent(ServiceMusic.ACTION_PAUSE));
+                //CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_URL));
+                CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_URL));
+
+                    Uri uri = Uri.parse(type);
+                    Intent i=new Intent(ServiceMusic.ACTION_URL,uri,getApplicationContext(),ServiceMusic.class);
+	        	    //Intent i = new Intent(ServiceMusic.ACTION_URL);
+	        	    i.putExtra("StationName", val.toString());
+                    i.setData(uri);
 	            stopService(i);
 	            startService(i);  
 	            selectPosition=pos;
-	            
-
-	        
-	    	}
+	        }
 
 			}		
 	    	@Override
 	    	public void onNothingSelected(AdapterView<?> arg0) {
 	    		// TODO Auto-generated method stub
 	    		
-	    	}
-	    
-	        });
+	    	}});
 		
 	}
 
     public void runList(View view){
-    	System.out.println("I've been clicked");
+    	Log.i(WeDance.class.getName(),"I've been clicked");
     	Intent list = new Intent(getApplicationContext(), TrackListActivity.class);
     	songsList=listAll.getMusic();
     	System.out.println(songsList.size());
@@ -350,8 +336,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     	
     	
     }
-    
-   
+
  
 	/** Method which updates the SeekBar primary progress by current song playing position*/
     private void primarySeekBarProgressUpdater() {
@@ -436,7 +421,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 	public void onCompletion(MediaPlayer mp) {
 		 /** MediaPlayer onCompletion event handler. Method which calls then song playing is complete*/
 		this.mediaPlayer=mp;
-		Log.e("Music","On COmpletion detected ");
+        Log.d(this.getClass().getName(),"On COmpletion detected ");
 		//buttonPlayPause.setImageResource(R.drawable.button_play);
 	}
 
@@ -444,24 +429,23 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 	public void onBufferingUpdate(MediaPlayer mp, int percent) {
 		/** Method which updates the SeekBar secondary progress by current song loading from URL position*/
 		seekBarProgress.setSecondaryProgress(percent);
-		System.out.println("buffering... pls wait...");
+        Log.i(this.getClass().getName(),"buffering... pls wait..." + percent);
 	}
 	
 	private class RecieveUpdates extends BroadcastReceiver{
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
 			
 				String msg=intent.getAction();
-				System.out.println("BroadCasting is " +msg);
+				Log.i(this.getClass().getName(),"BroadCasting is " +msg);
 				String s = intent.getStringExtra(ServiceMusic.PLAYING);
 				String stop = intent.getStringExtra(ServiceMusic.STOPPED);
 				
-				Log.d("WEdance","Recieving EXTRA BROADCAST  ==" + s + "or" + stop);
+				Log.d(this.getClass().getName(),"Recieving EXTRA BROADCAST  ==" + s + "or" + stop);
 		
 			if (intent.getAction().equals(ServiceMusic.LOADING)){
-				System.out.println("Hello from service" + ServiceMusic.LOADING);
+				Log.i(this.getClass().getName(),"Hello from service" + ServiceMusic.LOADING);
 				myText.setText("Loading...");
 				//bgColor.setBackgroundResource(R.drawable.newback);
 				bgColor.setBackgroundColor(Color.BLACK);
@@ -474,7 +458,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 				
 				mediaPlayer =ServiceMusic.getInstance().mPlayer;
 				try{
-					System.out.println("AUDIO Id==" + mediaPlayer.getAudioSessionId());
+					Log.i(this.getClass().getName(),"AUDIO Id==" + mediaPlayer.getAudioSessionId());
 					mVisualizerView.link(mediaPlayer);
 					addLineRenderer();
 					addCircleBarRenderer();
@@ -488,39 +472,27 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 				
 			}
 			if (intent.getAction().equals(ServiceMusic.PLAYING)){
-				
-				
-				System.out.println("Hello from service" + ServiceMusic.PLAYING);
+				Log.i(this.getClass().getName(),"starting playing..." + ServiceMusic.PLAYING);
 				//bgColor.setBackgroundColor(Color.BLUE);
 				bgColor.setBackgroundResource(R.drawable.au);
-			
 				buttonPlayPause.setImageResource(R.drawable.button_pause);
-							
-	
-				myText.setText("");
-				System.out.println("setting to " +s);
+			    myText.setText("");
+                Log.i(this.getClass().getName(),s);
 					if(s!= null){
 						myText.setHighlightColor(Color.BLUE);
 						myText.setBackgroundColor(Color.BLUE);
-				
 						myText.setText(s);
-						
-
 						}
-					
 				dialog.dismiss();
-				
 			}
 			if (intent.getAction().equals(ServiceMusic.STOPPED)){
 				myText.setText("STOPPED!!!");
 				//mediaPlayer.stop();
-				
 				if (stop!=null){
 					myText.setText("Error With Connection-Check station link!...");
 				}
 			    mVisualizerView.clearRenderers();
 				bgColor.setBackgroundColor(Color.BLACK);
-				
 				dialog.dismiss();
 			}
 			

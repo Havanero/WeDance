@@ -259,7 +259,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
-        System.out.println("Action Found is ..." + action);
+        Log.i(this.getClass().getName(),"Running Action" + action);
         if (action.equals(ACTION_TOGGLE_PLAYBACK)) processTogglePlaybackRequest();
         else if (action.equals(ACTION_PLAY)) processPlayRequest();
         else if (action.equals(ACTION_PAUSE)) processPauseRequest();
@@ -490,20 +490,16 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         mState = State.Stopped;
         relaxResources(false); // release everything except MediaPlayer
       
-        Log.e(TAG,"PlayNextSong running...for " + manualUrl);
+        Log.i(TAG,"Playing manual URL " + manualUrl);
         try {
-            MusicRetriever.Item playingItem = null;
-           
-            
-            if (manualUrl != null) {
-                // set the source of the media player to a manual URL or path
-                createMediaPlayerIfNeeded();
-                mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mPlayer.setDataSource(manualUrl);
-                
-                mIsStreaming = manualUrl.startsWith("http:") || manualUrl.startsWith("https:");
-                Log.i(TAG,"Playing Manual URL:" + mIsStreaming);
-                
+             MusicRetriever.Item playingItem = null;
+             if (manualUrl != null) {
+                    // set the source of the media player to a manual URL or path
+                    createMediaPlayerIfNeeded();
+                    mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mPlayer.setDataSource(manualUrl);
+                    mIsStreaming = manualUrl.startsWith("http:") || manualUrl.startsWith("https:");
+                    Log.i(TAG,"Streaming from  Manual URL:" + mIsStreaming);
               
                /* Toast.makeText(getBaseContext(), stationNames, Toast.LENGTH_LONG)
                 .show();*/

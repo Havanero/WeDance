@@ -35,8 +35,8 @@ public class ReceiveIntent extends BroadcastReceiver {
             Toast.makeText(context, "Headphones disconnected.", Toast.LENGTH_SHORT).show();
 
             // send an intent to our MusicService to telling it to pause the audio
-            context.startService(new Intent(ServiceMusic.ACTION_PAUSE));
-            
+            //context.startService(new Intent(ServiceMusic.ACTION_PAUSE));
+            CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(context,new Intent(ServiceMusic.ACTION_PAUSE));
 
         } else if (intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON)) {
             KeyEvent keyEvent = (KeyEvent) intent.getExtras().get(Intent.EXTRA_KEY_EVENT);
