@@ -123,53 +123,49 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
         IntentFilter intentStopped = new IntentFilter(ServiceMusic.STOPPED);
         registerReceiver(receivedFromService,intentStopped);
         Log.d(getClass().getName(),"Spinnner Selection is now " + selectPosition);
-        Log.e(getClass().getName(),"Linking Player onResume " );
+        Log.d(getClass().getName(), "Linking Player onResume ");
 	    ServiceMusic.getInstance();
 
-		if (!ServiceMusic.isMediaPlaying()){
-        	Log.e("Dance","onResume Player not longer playing");
+		if (!ServiceMusic.isMediaPlaying()) {
+			Log.d(getClass().getName(), "onResume Player not longer playing");
 
-            //Intent intent = new Intent();
-            //intent.setClassName("com.music.action.STOP","STOP");
+			//Intent intent = new Intent();
+			//intent.setClassName("com.music.action.STOP","STOP");
 
-            CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
-            CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplication(),new Intent(ServiceMusic.ACTION_PLAY));
+			CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(), new Intent(ServiceMusic.ACTION_STOP));
+			CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplication(), new Intent(ServiceMusic.ACTION_PLAY));
 
-       	//startService(new Intent(ServiceMusic.ACTION_STOP));
-       	//startService(new Intent(ServiceMusic.ACTION_PLAY));
-       	//startService(new Intent(ServiceMusic.ACTION_STOP));
-         if (isFinishing() && mediaPlayer != null) {
-        		 
-        		 mediaPlayer.release();
-        		 mediaPlayer = null;
-     	      
-     	       
-     	    }
+			//startService(new Intent(ServiceMusic.ACTION_STOP));
+			//startService(new Intent(ServiceMusic.ACTION_PLAY));
+			//startService(new Intent(ServiceMusic.ACTION_STOP));
+			if (isFinishing() && mediaPlayer != null) {
+
+				mediaPlayer.release();
+				mediaPlayer = null;
+
+
+			}
 		}
-        	
-        	try{
-        		//added new by caleb
-        		mediaPlayer=ServiceMusic.getInstance().mPlayer;
-
-        		if (mediaPlayer!=null){
-        			Log.d("Dance","OK to Release - NOT a null player");
-        			
-        		}else{
-        			Log.e("Dance","Not Releasing");
-        			
-        		}
-        		mVisualizerView.release();
-        		mVisualizerView.link(mediaPlayer);
-        		Log.d("Dance","Successfully Linked");
-        		addLineRenderer();
-				addCircleBarRenderer();
-				addBarGraphRenderers();
+		try
+		{
+			mediaPlayer=ServiceMusic.getInstance().mPlayer;
+        	if (mediaPlayer!=null){
+        			Log.d(getClass().getName(),"OK to Release - NOT a null player");
+				}
+			else{
+        			Log.d(getClass().getName(),"Not Releasing");
+				}
+//        	//mVisualizerView.release();
+//        	mVisualizerView.link(mediaPlayer);
+//        	Log.d(getClass().getName(), "Successfully Linked");
+//        	addLineRenderer();
+//			addCircleBarRenderer();
+//			addBarGraphRenderers();
  	        }
- 	        catch(Exception s){
- 	        	
- 	        	Log.e(getClass().getName(),"Error Linking on Resume " +s.toString());
- 	        	
- 	        }
+		catch(NullPointerException s)
+		{
+			Log.e(getClass().getName(),"Error Linking on Resume " +s.getMessage());
+		}
      	  
         
 		
@@ -183,7 +179,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     	  
     	  mediaPlayer=ServiceMusic.getInstance().mPlayer;
     	  if (mediaPlayer!=null){
-    		  Log.e("Music","Media not null");
+    		  Log.e(getClass().getName(),"Media not null");
     		 // 	mediaPlayer.reset();
       		//	mediaPlayer.release();
       		//	mediaPlayer = null;

@@ -455,7 +455,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         // part of the Intent. This Intent is sent by {@link MainActivity} after the user
         // specifies the URL/path via an alert box.
     	getStationName=intent.getStringExtra("StationName");
-    	Log.e(TAG,"Getting Intent" + intent.getStringExtra("StationName"));
+    	Log.i(TAG,"Getting Intent " + intent.getStringExtra("StationName"));
         if (mState == State.Retrieving) {
             // we'll play the requested URL right after we finish retrieving
             mWhatToPlayAfterRetrieve = intent.getData();
@@ -509,7 +509,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
             }
             else {
                 mIsStreaming = false; // playing a locally available song
-                Log.e(TAG,"We Are NOT Streaming ");
+                Log.d(TAG,"We Are NOT Streaming ");
                 playingItem = mRetriever.getRandomItem();
                 
                 
@@ -523,7 +523,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
                     return;
                 }
                 s.done=true;
-                Log.e(TAG,"playingItem = mRetriever.getRandomItem() " + playingItem.getTitle());
+                Log.d(TAG,"playingItem = mRetriever.getRandomItem() " + playingItem.getTitle());
                 // set the source of the media player a a content URI
                 createMediaPlayerIfNeeded();
                 mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -610,7 +610,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
             if (mWifiLock.isHeld()) mWifiLock.release();
             
             if (!mIsStreaming){
-            	Log.e(TAG,"NO Longer STREAMING"); //added  by Caleb for testing
+            	Log.d(TAG,"NO Longer STREAMING"); //added  by Caleb for testing
             	 
             }
         }
@@ -625,7 +625,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         // The media player finished playing the current song, so we go ahead and start the next.
     	
     	this.mPlayer=player;
-    	Log.e(TAG,"Should start next song");
+    	Log.d(TAG,"Should start next song");
     	
         playNextSong(null);
     }
@@ -729,7 +729,6 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         Log.e(TAG,"Playing this.."+text);
         
     }
-    
     
 
     /**
