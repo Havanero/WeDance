@@ -155,20 +155,12 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 			else{
         			Log.d(getClass().getName(),"Not Releasing");
 				}
-//        	//mVisualizerView.release();
-//        	mVisualizerView.link(mediaPlayer);
-//        	Log.d(getClass().getName(), "Successfully Linked");
-//        	addLineRenderer();
-//			addCircleBarRenderer();
-//			addBarGraphRenderers();
- 	        }
+		}
 		catch(NullPointerException s)
 		{
 			Log.e(getClass().getName(),"Error Linking on Resume " +s.getMessage());
 		}
-     	  
-        
-		
+
     }
     
     @Override
@@ -178,56 +170,28 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     	  Log.d(getClass().getName(),"Spinnner Selection is now " + selectPosition);
     	  
     	  mediaPlayer=ServiceMusic.getInstance().mPlayer;
-    	  if (mediaPlayer!=null){
+    	  if (mediaPlayer!=null)
+		  {
     		  Log.e(getClass().getName(),"Media not null");
-    		 // 	mediaPlayer.reset();
-      		//	mediaPlayer.release();
-      		//	mediaPlayer = null;
     	  }
     	  else{
     		  Log.e("Music","Media  null");
     	  }
     	 if (ServiceMusic.isMediaPlaying()){
-         	Log.d("Dance","onPause Player isMediaPlaying");
-         	//startService(new Intent(ServiceMusic.ACTION_STOP));
-         	//mediaPlayer.reset();
-         	//mediaPlayer.release();
-	       // mediaPlayer = null;
-         	
-         	//startService(new Intent(ServiceMusic.ACTION_STOP));
-         }else{
-        	 Log.d("Dance","onPause Player NOT isMediaPlaying");
-        	
-        	 mediaPlayer=ServiceMusic.getInstance().mPlayer;
-        	if (mediaPlayer!=null)
-            {
-              	CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
-                //Intent i=new Intent(ServiceMusic.ACTION_STOP);
-                //startService(i);
-                //startService(new Intent(ServiceMusic.ACTION_STOP));
-        		//mediaPlayer.reset();
-        		//mediaPlayer.release();
-        		//mediaPlayer = null;
-        	}
-        	 
-        	
-         }
-    	 	//mediaPlayer.release();
-    	 //	mediaPlayer = null;
-    	 //	try{
-    	 	//	mVisualizerView.release(); //added new by caleb
-    	 //  catch(Exception s){}
-    	   /* if (isFinishing() && mediaPlayer != null) {
-    	  
-    	        mediaPlayer.release();
-    	       mediaPlayer = null;
-    	        try{
-    	        mVisualizerView.release(); //added new by caleb
-    	        }
-    	        catch(Exception s){}
-    	    }*/
-    	   
+			 Log.d("Dance","onPause Player isMediaPlaying");
 
+		 }
+		 else
+		 {
+			 Log.d("Dance","onPause Player NOT isMediaPlaying");
+			 mediaPlayer=ServiceMusic.getInstance().mPlayer;
+
+			 if (mediaPlayer!=null)
+			 {
+              	CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
+			 }
+
+         }
     }
     
     @Override
