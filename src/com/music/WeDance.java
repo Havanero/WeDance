@@ -198,10 +198,8 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     public void onBackPressed(){
     	super.onBackPressed();
     	 if (ServiceMusic.isMediaPlaying()){
-          	Log.d("Dance","Back Button Pressed Disconnecting Player");
-            //CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
-          	//startService(new Intent(ServiceMusic.ACTION_STOP));
-             Intent i=new Intent(ServiceMusic.ACTION_STOP);
+          	 Log.d("Dance","Back Button Pressed Disconnecting Player");
+			 Intent i=CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_STOP));
              startService(i);
 
          }
