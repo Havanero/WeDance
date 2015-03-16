@@ -259,7 +259,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
-        Log.i(this.getClass().getName(),"Running Action" + action);
+        Log.i(this.getClass().getName(), "Running Action" + action);
         if (action.equals(ACTION_TOGGLE_PLAYBACK)) processTogglePlaybackRequest();
         else if (action.equals(ACTION_PLAY)) processPlayRequest();
         else if (action.equals(ACTION_PAUSE)) processPauseRequest();
@@ -455,7 +455,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         // part of the Intent. This Intent is sent by {@link MainActivity} after the user
         // specifies the URL/path via an alert box.
     	getStationName=intent.getStringExtra("StationName");
-    	Log.i(TAG,"Getting Intent " + intent.getStringExtra("StationName"));
+    	Log.i(TAG, "Getting Intent " + intent.getStringExtra("StationName"));
         if (mState == State.Retrieving) {
             // we'll play the requested URL right after we finish retrieving
             mWhatToPlayAfterRetrieve = intent.getData();
@@ -490,7 +490,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         mState = State.Stopped;
         relaxResources(false); // release everything except MediaPlayer
       
-        Log.i(TAG,"Playing manual URL " + manualUrl);
+        Log.i(TAG, "Playing manual URL " + manualUrl);
         try {
              MusicRetriever.Item playingItem = null;
              if (manualUrl != null) {
@@ -509,7 +509,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
             }
             else {
                 mIsStreaming = false; // playing a locally available song
-                Log.d(TAG,"We Are NOT Streaming ");
+                Log.d(TAG, "We Are NOT Streaming ");
                 playingItem = mRetriever.getRandomItem();
                 
                 
@@ -523,7 +523,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
                     return;
                 }
                 s.done=true;
-                Log.d(TAG,"playingItem = mRetriever.getRandomItem() " + playingItem.getTitle());
+                Log.d(TAG, "playingItem = mRetriever.getRandomItem() " + playingItem.getTitle());
                 // set the source of the media player a a content URI
                 createMediaPlayerIfNeeded();
                 mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -610,7 +610,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
             if (mWifiLock.isHeld()) mWifiLock.release();
             
             if (!mIsStreaming){
-            	Log.d(TAG,"NO Longer STREAMING"); //added  by Caleb for testing
+            	Log.d(TAG, "NO Longer STREAMING"); //added  by Caleb for testing
             	 
             }
         }
@@ -625,7 +625,7 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         // The media player finished playing the current song, so we go ahead and start the next.
     	
     	this.mPlayer=player;
-    	Log.d(TAG,"Should start next song");
+    	Log.d(TAG, "Should start next song");
     	
         playNextSong(null);
     }
@@ -692,7 +692,6 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
 		   Log.e(TAG,"Cancelling Thread URL not good");
 		   w.done=true; 
 	   }
-	   System.out.println("url is " + myURL);
 	   new NetworkTask().execute(myURL); 
 	   
 
@@ -806,33 +805,29 @@ public class ServiceMusic extends Service implements OnCompletionListener, OnPre
         return null;
     }
     
-    private class NetworkTask extends AsyncTask<String,String, String>{
-    	 
+    private class NetworkTask extends AsyncTask<String,String, String> {
+
         String data = null;
         IcyStreamMeta title;
-        
-    	URL url;
+
+        URL url;
  
         @Override
         protected String doInBackground(String... param) {
             try{
-
-            	 url = new URL(param[0]);
-            	 System.out.println("Processing URL" + url);
-            	 title = new IcyStreamMeta(url);
-            	// title.refreshMeta();
-            	 System.out.println("extracting getTitle" + title.getTitle());
-            	 System.out.println("extracting Artist" + title.getArtist());
-            	 titlePlaing=title.getTitle();
-            	 artistPlaying=title.getArtist();
+                url = new URL(param[0]);
+            	title = new IcyStreamMeta(url);
+            	title.refreshMeta();
+            	Log.i(TAG,"extracting getTitle" + title.getTitle());
+            	Log.i(TAG,"extracting Artist" + title.getArtist());
+            	titlePlaing=title.getTitle();
+            	artistPlaying=title.getArtist();
             }catch(Exception e){
                 Log.e("Background Task",e.toString());
                 return null;
-                
             }
-          
             return titlePlaing+ " [ " + artistPlaying + "]";
-        }
+            }
  
         // Executed after the complete execution of doInBackground() method
         @Override
