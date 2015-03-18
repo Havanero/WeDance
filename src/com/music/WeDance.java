@@ -20,8 +20,6 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
-import android.nfc.Tag;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,9 +30,7 @@ import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -62,7 +58,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 	String[] mPlaceType=null;
 	String[] mPlaceTypeName=null;
 	URL globalURL;
-	private RecieveUpdates receivedFromService; 
+	private ReceiveUpdates receivedFromService;
 	private int currentSongIndex = 0;
 	PlayingSong songDetails;
 	MusicList listAll= MusicList.getInstance();
@@ -115,7 +111,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     @Override
     public void onResume(){
     	super.onResume();
-    	if (receivedFromService==null)receivedFromService=new RecieveUpdates();
+    	if (receivedFromService==null)receivedFromService=new ReceiveUpdates();
     	IntentFilter intentFilter = new IntentFilter(ServiceMusic.LOADING);
         registerReceiver(receivedFromService,intentFilter);
         IntentFilter intentFilter1 = new IntentFilter(ServiceMusic.PLAYING);
@@ -390,7 +386,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
         Log.i(this.getClass().getName(),"buffering... pls wait..." + percent);
 	}
 	
-	private class RecieveUpdates extends BroadcastReceiver{
+	private class ReceiveUpdates extends BroadcastReceiver{
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
