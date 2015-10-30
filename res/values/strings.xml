@@ -14,6 +14,9 @@
         <item>http://205.164.62.21:7700</item>
         <item>http://pub5.di.fm:80/di_progressive_aac</item>
         <item>http://84.46.204.45:8000/ehr</item>
+        <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p</item>
+        <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p</item>
+        <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1xtra_mf_p</item>
     </string-array>
     <string-array name="stationAddress_name">
         <item>Switch Station</item>
@@ -26,5 +29,8 @@
         <item>Vocal Trance 2</item>
         <item>Progressive</item>
         <item>European Radio</item>
+        <item>BBC Radio1</item>
+        <item>BBC 5 Live</item>
+        <item>BBC1 Extra</item>
     </string-array>
 </resources>
