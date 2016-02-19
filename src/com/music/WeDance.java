@@ -1,11 +1,5 @@
 package com.music;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -17,7 +11,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,24 +20,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.music.visual.VisualizerView;
 import com.music.visual.render.BarGraphRenderer;
 import com.music.visual.render.CircleBarRenderer;
 import com.music.visual.render.CircleRenderer;
 import com.music.visual.render.LineRenderer;
 
-public class WeDance extends Activity implements OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener{
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class WeDance extends Activity implements OnClickListener, OnTouchListener, OnCompletionListener{
 	
 	private ImageButton buttonPlayPause;
 	private SeekBar seekBarProgress;
@@ -52,22 +42,16 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     ProgressDialog dialog;
     private String type ="null";
 
-	private ImageButton songListView;
-	public EditText editTextSongURL;
 	Spinner mSprPlaceType;
 	String[] mPlaceType=null;
 	String[] mPlaceTypeName=null;
 	URL globalURL;
 	private ReceiveUpdates receivedFromService;
 	private int currentSongIndex = 0;
-	PlayingSong songDetails;
 	MusicList listAll= MusicList.getInstance();
 	RelativeLayout bgColor;
-	private int spinnerSelection,selectPosition=0;
-	//FrameLayout bgColor;
-	static final String PLAYER_STATE="playerState";
+	private int selectPosition=0;
 	static final String STATE_SELECTED = "linkPosition";
-    final static String TAG = "ServiceMusic";
 	TextView myText;
 	    
 	private MediaPlayer mediaPlayer;  
@@ -77,13 +61,13 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 	private final Handler handler = new Handler();
 	
 	private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
-	private int pState=0;
-   
-	
+
+
 	private VisualizerView mVisualizerView;
-	private TextView mStatusTextView;
+
 	
-	
+
+
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,27 +108,19 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 
 		if (!ServiceMusic.isMediaPlaying()) {
 			Log.d(getClass().getName(), "onResume Player not longer playing");
-
-			//Intent intent = new Intent();
-			//intent.setClassName("com.music.action.STOP","STOP");
-
-			CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(), new Intent(ServiceMusic.ACTION_STOP));
-			CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplication(), new Intent(ServiceMusic.ACTION_PLAY));
-
-			//startService(new Intent(ServiceMusic.ACTION_STOP));
-			//startService(new Intent(ServiceMusic.ACTION_PLAY));
-			//startService(new Intent(ServiceMusic.ACTION_STOP));
+			CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),
+					new Intent(ServiceMusic.ACTION_STOP));
+			CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplication(),
+					new Intent(ServiceMusic.ACTION_PLAY));
 			if (isFinishing() && mediaPlayer != null) {
-
 				mediaPlayer.release();
 				mediaPlayer = null;
-
-
 			}
 		}
 		try
 		{
-			mediaPlayer=ServiceMusic.getInstance().mPlayer;
+			ServiceMusic.getInstance();
+			mediaPlayer= ServiceMusic.mPlayer;
         	if (mediaPlayer!=null){
         			Log.d(getClass().getName(),"OK to Release - NOT a null player");
 				}
@@ -164,8 +140,8 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     	super.onPause();
     	 if (receivedFromService!=null)unregisterReceiver(receivedFromService);
     	  Log.d(getClass().getName(),"Spinnner Selection is now " + selectPosition);
-    	  
-    	  mediaPlayer=ServiceMusic.getInstance().mPlayer;
+
+		mediaPlayer= ServiceMusic.mPlayer;
     	  if (mediaPlayer!=null)
 		  {
     		  Log.e(getClass().getName(),"Media not null");
@@ -180,7 +156,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 		 else
 		 {
 			 Log.d("Dance","onPause Player NOT isMediaPlaying");
-			 mediaPlayer=ServiceMusic.getInstance().mPlayer;
+			 mediaPlayer= ServiceMusic.mPlayer;
 
 			 if (mediaPlayer!=null)
 			 {
@@ -206,78 +182,61 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
             
     	bgColor = (RelativeLayout)findViewById(R.id.bgID);
 		buttonPlayPause = (ImageButton)findViewById(R.id.ButtonTestPlayPause);
-		songListView=(ImageButton) findViewById(R.id.btnPlaylist);
 		mPlaceType = getResources().getStringArray(R.array.stationAddress);
-	        // Array of place type names
 	    mPlaceTypeName = getResources().getStringArray(R.array.stationAddress_name);
 		buttonPlayPause.setOnClickListener(this);
 		seekBarProgress = (SeekBar)findViewById(R.id.SeekBarTestPlay);	
 		seekBarProgress.setMax(99); // It means 100% .0-99
 		seekBarProgress.setOnTouchListener(this);
-		//editTextSongURL = (EditText)findViewById(R.id.EditTextSongURL);
-		//editTextSongURL.setText(R.string.testsong_20_sec);
+
 		myText=(TextView)findViewById(R.id.displayText);
 		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, mPlaceTypeName);
-        // Getting reference to the Spinner
+
         mSprPlaceType = (Spinner) findViewById(R.id.spr_place_type);
-        // Setting adapter on Spinner to set place types
+
         mSprPlaceType.setAdapter(adapter);
         mediaPlayer=ServiceMusic.mPlayer;
-	//	mediaPlayer.setOnBufferingUpdateListener(this);
-	//	mediaPlayer.setOnCompletionListener(this);
+
 		mVisualizerView = (VisualizerView) findViewById(R.id.visualizerView);
-		//mSprPlaceType.setOnItemSelectedListener(this);
 		mSprPlaceType.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
+
 	    	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 	    			long id) {
-	    		// TODO Auto-generated method stub
-	        	//mediaPlayer.release();
 	        	Object val=parent.getItemAtPosition(pos);
 	            type = mPlaceType[pos];
 	        	if (pos==0){
 	        		  return;
 	        		
-	        	}if(selectPosition==pos){
-	        		return;
 	        	}
-	        	else{
+				if (selectPosition != pos) {
 
-	        	URL useURL = null;
-				try {
-					useURL = new URL(type);
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        	globalURL=useURL;
-	        	Log.d(getClass().getName(),"Selected=="+val.toString() + "......URL==" + type);
-	      //  if(!mediaPlayer.isPlaying()){
-			//		mediaPlayer.start();
-			// 	}
-	        	//mVisualizerView.release();
-	        	CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_PAUSE));
-	        	//startService(new Intent(ServiceMusic.ACTION_PAUSE));
-                //CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_URL));
+                URL useURL = null;
+                try {
+                    useURL = new URL(type);
+                } catch (MalformedURLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                globalURL=useURL;
+                Log.d(getClass().getName(),"Selected=="+val.toString() + "......URL==" + type);
+                CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_PAUSE));
                 CreateExplicitFromImplicitIntent.createExplicitFromImplicitIntent(getApplicationContext(),new Intent(ServiceMusic.ACTION_URL));
-
-                    Uri uri = Uri.parse(type);
-                    Intent i=new Intent(ServiceMusic.ACTION_URL,uri,getApplicationContext(),ServiceMusic.class);
-	        	    //Intent i = new Intent(ServiceMusic.ACTION_URL);
-	        	    i.putExtra("StationName", val.toString());
-                    i.setData(uri);
-	            stopService(i);
-	            startService(i);  
-	            selectPosition=pos;
-	        }
+					Uri uri = Uri.parse(type);
+					Intent i=new Intent(ServiceMusic.ACTION_URL,uri,getApplicationContext(),ServiceMusic.class);
+					i.putExtra("StationName", val.toString());
+					i.setData(uri);
+                stopService(i);
+                startService(i);
+                selectPosition=pos;
+            }
 
 			}		
 	    	@Override
 	    	public void onNothingSelected(AdapterView<?> arg0) {
 	    		// TODO Auto-generated method stub
-	    		
+
 	    	}});
-		
+
 	}
 
     public void runList(View view){
@@ -310,30 +269,10 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 	public void onClick(View v) {
 		if(v.getId() == R.id.ButtonTestPlayPause){
 			 /** ImageButton onClick event handler. Method which start/pause mediaplayer playing */
-		/*	try {
-				mediaPlayer.setDataSource(editTextSongURL.getText().toString()); // setup song from http://www.hrupin.com/wp-content/uploads/mp3/testsong_20_sec.mp3 URL to mediaplayer data source
-				mediaPlayer.prepare(); // you must call this method after setup the datasource in setDataSource method. After calling prepare() the instance of MediaPlayer starts load data from URL to internal buffer. 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			mediaFileLengthInMilliseconds = mediaPlayer.getDuration(); // gets the song length in milliseconds from URL
-			
-			if(!mediaPlayer.isPlaying()){
-				mediaPlayer.start();
-				buttonPlayPause.setImageResource(R.drawable.button_pause);
-			}else {
-				mediaPlayer.pause();
-				mediaPlayer.reset();
-				System.out.println("Releasing Player");
-				buttonPlayPause.setImageResource(R.drawable.button_play);
-			}
-			
-			primarySeekBarProgressUpdater();*/
-		//	mediaPlayer =ServiceMusic.getInstance().mPlayer;
-		//	mediaFileLengthInMilliseconds = mediaPlayer.getDuration();
-			mediaPlayer =ServiceMusic.getInstance().mPlayer;
-		
+
+			ServiceMusic.getInstance();
+			mediaPlayer = ServiceMusic.mPlayer;
+
 		try{
 				if (!mediaPlayer.isPlaying()){
 					//mediaPlayer.stop();
@@ -341,7 +280,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 					mediaPlayer.start();
 					//startService(new Intent(ServiceMusic.ACTION_PLAY));
 					buttonPlayPause.setImageResource(R.drawable.button_pause);
-					
+
 				}else{
 					mediaPlayer.pause();
 					//mediaPlayer.reset();
@@ -351,13 +290,12 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 				startService(new Intent(ServiceMusic.ACTION_PAUSE));
 				buttonPlayPause.setImageResource(R.drawable.button_play);
 			}
-		catch(java.lang.NullPointerException s){ 
+		catch(java.lang.NullPointerException s){
 				Toast.makeText(this,"Not Playing!", Toast.LENGTH_SHORT).show();
             }
 		}
 	}
 
-	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		if(v.getId() == R.id.SeekBarTestPlay){
 			/** Seekbar onTouch event handler. Method which seeks MediaPlayer to seekBar primary progress position*/
@@ -370,8 +308,6 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 		}
 		return false;
 	}
-
-	@Override
 	public void onCompletion(MediaPlayer mp) {
 		 /** MediaPlayer onCompletion event handler. Method which calls then song playing is complete*/
 		this.mediaPlayer=mp;
@@ -379,13 +315,7 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 		//buttonPlayPause.setImageResource(R.drawable.button_play);
 	}
 
-	@Override
-	public void onBufferingUpdate(MediaPlayer mp, int percent) {
-		/** Method which updates the SeekBar secondary progress by current song loading from URL position*/
-		seekBarProgress.setSecondaryProgress(percent);
-        Log.i(this.getClass().getName(),"buffering... pls wait..." + percent);
-	}
-	
+
 	private class ReceiveUpdates extends BroadcastReceiver{
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -409,8 +339,9 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
 				dialog.setIndeterminate(true);
 				dialog.setCancelable(false);
 				dialog.show();
-				
-				mediaPlayer =ServiceMusic.getInstance().mPlayer;
+
+				ServiceMusic.getInstance();
+				mediaPlayer = ServiceMusic.mPlayer;
 				try{
 					Log.i(this.getClass().getName(),"AUDIO Id==" + mediaPlayer.getAudioSessionId());
 					mVisualizerView.link(mediaPlayer);
@@ -462,19 +393,19 @@ public class WeDance extends Activity implements OnClickListener, OnTouchListene
     protected void onActivityResult(int requestCode,
                                      int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        
+
         Log.i("WeDance", "Result Code is " + resultCode);
         if(resultCode == 100){
          	 currentSongIndex = data.getExtras().getInt("songIndex");
          	 // play selected song
-         	 
+
          	 Log.i("We Dance","Receiving Song ID from TrackList Activity" +currentSongIndex);
              playSong(currentSongIndex);
         }
- 
+
     }
 
-	
+
 	/**
 	 * Function to play a song
 	 * @param songIndex - index of song

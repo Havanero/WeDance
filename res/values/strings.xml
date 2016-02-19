@@ -12,7 +12,8 @@
         <item>http://vprbbc.streamguys.net:80/vprbbc24.mp3</item>
         <item>http://205.164.62.13:7700</item>
         <item>http://205.164.62.21:7700</item>
-        <item>http://pub5.di.fm:80/di_progressive_aac</item>
+        <!--<item>http://pub5.di.fm:80/di_progressive_aac</item>-->
+        <item>http://pub9am.di.fm/di_progressive_aac</item>
         <item>http://84.46.204.45:8000/ehr</item>
         <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p</item>
         <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p</item>

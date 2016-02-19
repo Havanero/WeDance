@@ -91,11 +91,6 @@
         android:layout_weight="1"
         android:background="#000" >
 
-        <com.music.visual.VisualizerView
-            android:id="@+id/visualizerView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-        </com.music.visual.VisualizerView>
     </FrameLayout>
             
 	 <TextView

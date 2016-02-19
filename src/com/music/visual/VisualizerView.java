@@ -48,7 +48,8 @@ public class VisualizerView extends View {
   public VisualizerView(Context context, AttributeSet attrs, int defStyle)
   {
     super(context, attrs);
-    init();
+    if(!isInEditMode())
+        init();
   }
 
   public VisualizerView(Context context, AttributeSet attrs)
