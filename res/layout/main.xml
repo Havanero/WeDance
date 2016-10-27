@@ -1,112 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000000" 
-    android:id="@+id/bgID"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".WeDance" >
-   <!-- Player Header -->
-    <LinearLayout 
-        android:id="@+id/linear1"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
-        android:layout_alignParentTop="true"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="#000000"
+                android:id="@+id/bgID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.music.WeDance">
+    <!-- Player Header -->
+    <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="fill_parent"
+            android:layout_height="60dip"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
 
         <Spinner
-        android:id="@+id/spr_place_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingLeft="5dp"
-        android:thumb="@drawable/thumb_transparent"
-        android:layout_marginTop="10dp"/>"
-        <TextView 
-	    android:layout_below="@+id/dummyText"
-	    android:layout_centerHorizontal="true"
-	    android:layout_width="wrap_content"
-	    android:layout_weight="3"
-        android:layout_height="match_parent"/>
-  <ImageButton 
-            android:id="@+id/btnPlaylist"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/btn_playlist"
-            android:onClick="runList"
-            android:layout_weight="1"
-            
-            android:layout_marginTop="10dp"
-            android:background="@null"/>
+                android:id="@+id/spr_place_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:thumb="@drawable/thumb_transparent"
+                android:layout_marginTop="10dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry"/>"
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="3"
+                android:layout_height="match_parent"/>
+
+        <ImageButton
+                android:id="@+id/btnPlaylist"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/btn_playlist"
+                android:onClick="runList"
+                android:layout_weight="1"
+
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:contentDescription="image button"
+                tools:ignore="HardcodedText"/>
     </LinearLayout>
-    	
-	<ImageButton 
-		android:layout_below="@+id/linear1"
-		android:id="@+id/ButtonTestPlayPause" 
-		android:layout_height="wrap_content" 
-		android:layout_width="match_parent"
-		android:src="@drawable/button_play"/>
-	<SeekBar 
-		android:layout_below="@+id/ButtonTestPlayPause"
-		android:id="@+id/SeekBarTestPlay" 
-		android:layout_height="wrap_content" 
-		android:layout_width="match_parent"
-		android:thumb="@drawable/thumb_transparent"/>
-	<TextView 
-	    android:layout_below="@+id/SeekBarTestPlay"
-	    android:layout_centerHorizontal="true"
-	    android:id="@+id/displayText"
-	    android:layout_height="wrap_content" 
-	    android:textSize="8pt" 
-		android:layout_width="match_parent"/>
-	<FrameLayout
-	 	android:layout_below="@+id/displayText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_weight="1">
+
+    <ImageButton
+            android:layout_below="@+id/linear1"
+            android:id="@+id/ButtonTestPlayPause"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:src="@drawable/button_play"
+            android:contentDescription="button"
+            tools:ignore="HardcodedText"/>
+
+    <SeekBar
+            android:layout_below="@+id/ButtonTestPlayPause"
+            android:id="@+id/SeekBarTestPlay"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:thumb="@drawable/thumb_transparent"/>
+
+    <TextView
+            android:layout_below="@+id/SeekBarTestPlay"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/displayText"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:layout_width="match_parent"/>
+
+    <FrameLayout
+            android:layout_below="@+id/displayText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            >
 
         <com.music.visual.VisualizerView
-            android:id="@+id/visualizerView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+                android:id="@+id/visualizerView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
         </com.music.visual.VisualizerView>
     </FrameLayout>
-		
-	    
-	 <LinearLayout
-	    	android:orientation="vertical"
+
+
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_below="@+id/displayText">
-           	 <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="#000" >
 
-        <com.music.visual.VisualizerView
-            android:id="@+id/visualizerView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-        </com.music.visual.VisualizerView>
-    </FrameLayout>
-            
-	 <TextView
-	   	android:id="@+id/animationText"
-	 	android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-        </TextView>  
-       
-        
-	 	
-	 </LinearLayout>
-	
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="#000">
+
+            <com.music.visual.VisualizerView
+                    android:id="@+id/visualizerView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+            </com.music.visual.VisualizerView>
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/animationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+        </TextView>
+
+
+    </LinearLayout>
+
 </RelativeLayout>

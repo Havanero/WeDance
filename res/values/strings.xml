@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    
+<resources>
+
     <string name="app_name">CubanoFM</string>
-	<string name="testsong_20_sec">http://scfire-ntc-aa01.stream.aol.com/stream/1011:80/stream/1011</string>
-	<string-array name="stationAddress">
-	    <item></item>
-        <item>http://us-nj01-icecast.musiconeradio.com:80/musicone/mp3/128k</item>
-        <item>http://icy-e-05.sharp-stream.com:80/kiss100.mp3</item>
+    <string-array name="stationAddress">
+        <item/>
+        <item>http://us-nj01-shoutcast.musiconeradio.com/musicone/mp3/128k</item>
+        <item>http://icy-e-ba-01-gos.sharp-stream.com/kissnationallow.mp3</item>
         <item>http://icy-e-05.sharp-stream.com:80/magic1054.mp3</item>
         <item>http://media-ice.musicradio.com:80/CapitalMP3</item>
         <item>http://vprbbc.streamguys.net:80/vprbbc24.mp3</item>
-        <item>http://205.164.62.13:7700</item>
-        <item>http://205.164.62.21:7700</item>
-        <item>http://pub5.di.fm:80/di_progressive_aac</item>
-        <item>http://84.46.204.45:8000/ehr</item>
+        <item>http://82.135.234.195:8000/ehr.mp3</item>
         <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p</item>
         <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p</item>
         <item>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1xtra_mf_p</item>
+        <item>http://strm112.1.fm/atr_mobile_mp3</item>
     </string-array>
     <string-array name="stationAddress_name">
         <item>Switch Station</item>
@@ -25,12 +22,10 @@
         <item>Magic FM</item>
         <item>Capital FM</item>
         <item>BBC FOUR</item>
-        <item>Vocal Trance 1</item>
-        <item>Vocal Trance 2</item>
-        <item>Progressive</item>
-        <item>European Radio</item>
+        <item>LT HIT TRadio</item>
         <item>BBC Radio1</item>
         <item>BBC 5 Live</item>
         <item>BBC1 Extra</item>
+        <item>Trance Radio</item>
     </string-array>
 </resources>
